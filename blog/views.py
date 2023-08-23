@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView, ListView, DetailView
+from rest_framework.generics import ListAPIView
+
 from blog.models import Post
+from blog.serializers import PostSerializer
 # Create your views here.
 
 
@@ -20,3 +23,8 @@ class PostDetailView(DetailView):
     queryset = Post.objects.filter()
     template_name = 'blog/detail.html'
     context_object_name = 'post'
+
+
+class PostListAPIView(ListAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
