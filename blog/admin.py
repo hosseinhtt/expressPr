@@ -5,7 +5,7 @@ from blog.models import Post, Category, Comment
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    fields = ['title', 'content', 'author', 'category', 'is_deleted']
+    fields = ['title', 'slug', 'content', 'author', 'category', 'is_deleted']
     list_per_page = 8
     ordering = ['title', 'author', 'content']
     search_fields = ['title', 'author__username']

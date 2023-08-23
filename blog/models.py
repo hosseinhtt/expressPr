@@ -3,7 +3,19 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 
+class BaseManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(is_deleted=False)
+
+    def get_deleted(self):
+        return super().get_queryset().filter(is_deleted=True)
+
+    def get_all(self):
+        return super().get_queryset()
+
+
 class BaseModel(models.Model):
+    objects = BaseManager()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_deleted = models.BooleanField(default=False)
@@ -28,6 +40,7 @@ class Post(BaseModel):
     content = models.TextField()
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    slug = models.SlugField()
 
     def __str__(self):
         return f'{self.author}: {self.title=}- {self.content[:15]}'
