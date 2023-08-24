@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView, ListView, DetailView
 from rest_framework.generics import ListAPIView
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework import viewsets
 
 from blog.models import Post
 from blog.serializers import PostSerializer
@@ -28,3 +30,9 @@ class PostDetailView(DetailView):
 class PostListAPIView(ListAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+
+
+class PostViewSet(viewsets.ModelViewSet):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    Permission_class = [IsAuthenticatedOrReadOnly]

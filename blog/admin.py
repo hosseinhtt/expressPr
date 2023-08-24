@@ -1,5 +1,6 @@
 from django.contrib import admin
 from blog.models import Post, Category, Comment
+from blog.actions import *
 # Register your models here.
 
 
@@ -11,6 +12,8 @@ class PostAdmin(admin.ModelAdmin):
     search_fields = ['title', 'author__username']
     list_display = ['title', 'category', 'author', 'is_deleted']
     list_filter = ['is_deleted']
+    actions = [set_is_deleted_true]
+    set_is_deleted_true.short_description = 'Set Deleted'
 
 
 @admin.register(Category)
