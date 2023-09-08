@@ -1,21 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
+{% block title %}
+Posts
+{% endblock %}
+{% block content %}
+<div class="container">
+    <h1 class="mt-5">Blog Posts</h1>
+    <div class="row">
+        {% for object in object_list %}
+        <div class="col-md-4 mt-4">
+            <div class="card">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Posts</title>
-</head>
-
-<body>
-    <h1>Blog Posts</h1>
-    {% for object in object_list %}
-    <h3>{{object.title}}</h3>
-    <a href="{% url 'post-detail' object.slug %}">Read More</a>
-    <br>
-    <hr>
-
-    {% endfor %}
-</body>
-
-</html>
+                <div class="card-body">
+                    <h5 class="card-title">{{ object.title }}</h5>
+                    <p class="card-text">{{ object.summary }}</p>
+                    <a href="{% url 'post-detail' object.slug %}" class="btn btn-primary">Read More</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
